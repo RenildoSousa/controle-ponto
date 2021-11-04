@@ -10,7 +10,6 @@ import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -18,7 +17,6 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import java.time.LocalDateTime;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
@@ -46,12 +44,12 @@ public class ErrorValidationHendler {
 
     @ExceptionHandler(DateTimeParseException.class)
     public ResponseEntity<?> handleHttpMessageNotReadableException(DateTimeParseException ex) {
-        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(new ErrorDto(ex.getMessage(), "Data e hora em formato inválido"));
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ErrorDto(ex.getMessage(), "Data e hora em formato inválido"));
     }
 
     @ExceptionHandler(LimiteBatidasException.class)
     public ResponseEntity<?> handleLimeBatidasException(LimiteBatidasException ex) {
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ErrorDto(ex.getDataHora().toString(), ex.getMensagem()));
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(new ErrorDto(ex.getDataHora().toString(), ex.getMensagem()));
     }
 
     @ExceptionHandler(HorarioRegistradoException.class)

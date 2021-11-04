@@ -25,7 +25,7 @@ public class SwaggerConfiguration {
 
     public ApiInfo apiInfo() {
         return new ApiInfoBuilder().title("Desafio Backend | Spring Boot").description(
-                        "Criar uma API que permita a realização das seguintes as seguintes ações")
+                        "Criar uma API que permita a realização das seguintes ações")
                 .version("1.0").build();
     }
 
